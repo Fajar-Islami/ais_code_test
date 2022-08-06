@@ -7,7 +7,6 @@ import (
 	"github.com/Fajar-Islami/ais_code_test/entity"
 	"github.com/Fajar-Islami/ais_code_test/infrastructure/container"
 	"github.com/fatih/color"
-	"github.com/sirupsen/logrus"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -25,7 +24,6 @@ func SetupDatabaseConnection(cont container.Pgsql) *gorm.DB {
 
 	db, err := gorm.Open(postgres.Open(dbUrl), &gorm.Config{})
 	if err != nil {
-		logrus.Error("Failed to connect database")
 		panic(err)
 	}
 
@@ -53,5 +51,15 @@ func SetupDatabaseConnection(cont container.Pgsql) *gorm.DB {
 	db.AutoMigrate(&entity.Article{})
 
 	return db
+
+}
+
+func CloseDatabaseConnection(db *gorm.DB) {
+	dbSQL, err := db.DB()
+	if err != nil {
+		panic("Failed to close connection to database")
+	}
+
+	dbSQL.Close()
 
 }

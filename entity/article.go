@@ -7,5 +7,5 @@ type Article struct {
 	Author  string    `gorm:"type:TEXT;not null" json:"author"`
 	Title   string    `gorm:"type:TEXT;not null" json:"title"`
 	Body    string    `gorm:"type:TEXT;not null" json:"body"`
-	Created time.Time `gorm:"not null"json:"Created"`
+	Created time.Time `gorm:"autoCreateTime:true" json:"created"`
 }

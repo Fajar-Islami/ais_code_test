@@ -6,7 +6,7 @@ compile:
 
 composerestart:
 	docker-compose down -v
-	docker-compose up
+	docker-compose up -d
 
 dockerrun:
 	docker build . -t ais_be:1.0.0
