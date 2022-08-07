@@ -1,14 +1,16 @@
 package app
 
 import (
+	"context"
 	"fmt"
 	"net/http"
 
 	"github.com/Fajar-Islami/ais_code_test/controller"
 	"github.com/Fajar-Islami/ais_code_test/infrastructure/container"
 	"github.com/Fajar-Islami/ais_code_test/infrastructure/db"
+	"github.com/Fajar-Islami/ais_code_test/repository/article"
+
 	redisClient "github.com/Fajar-Islami/ais_code_test/infrastructure/redis"
-	"github.com/Fajar-Islami/ais_code_test/repository"
 	"github.com/Fajar-Islami/ais_code_test/service"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
@@ -17,11 +19,13 @@ import (
 
 func Start(cont *container.Container, server *gin.Engine) {
 	var (
-		redisDb           *redis.Client                = redisClient.NewRedisClient(*cont.Redis)
-		pgsqlDb           *gorm.DB                     = db.SetupDatabaseConnection(*cont.Pgsql)
-		articleRepo       repository.ArticleRepository = repository.NewArticleRepository(pgsqlDb)
-		artilceService    service.ArticleService       = service.NewArticleService(articleRepo)
-		articleController controller.ArticleController = controller.NewArticleController(artilceService)
+		ctx               context.Context                = context.Background()
+		redisDb           *redis.Client                  = redisClient.NewRedisClient(*cont.Redis)
+		pgsqlDb           *gorm.DB                       = db.SetupDatabaseConnection(*cont.Pgsql)
+		articleRedisRepo  article.RedisArtilceRepository = article.NewRedisRepo(ctx, redisDb)
+		articleRepo       article.ArticleRepository      = article.NewArticleRepository(ctx, pgsqlDb)
+		artilceService    service.ArticleService         = service.NewArticleService(ctx, articleRepo, articleRedisRepo)
+		articleController controller.ArticleController   = controller.NewArticleController(ctx, artilceService)
 	)
 
 	defer db.CloseDatabaseConnection(pgsqlDb)

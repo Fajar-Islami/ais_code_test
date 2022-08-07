@@ -1,6 +1,9 @@
 enterpostgre:
 	docker exec -it postgres_ais psql -U admin ais_db
 
+enterredis:
+	docker exec -it redis_ais redis-cli
+
 compile:
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/app
 

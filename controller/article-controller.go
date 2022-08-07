@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/Fajar-Islami/ais_code_test/dto"
@@ -15,11 +16,13 @@ type ArticleController interface {
 }
 
 type articleController struct {
+	context        context.Context
 	articleService service.ArticleService
 }
 
-func NewArticleController(articleService service.ArticleService) ArticleController {
+func NewArticleController(context context.Context, articleService service.ArticleService) ArticleController {
 	return &articleController{
+		context:        context,
 		articleService: articleService,
 	}
 }

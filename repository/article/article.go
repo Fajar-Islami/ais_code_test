@@ -1,6 +1,7 @@
-package repository
+package article
 
 import (
+	"context"
 	"errors"
 
 	"github.com/Fajar-Islami/ais_code_test/entity"
@@ -8,7 +9,8 @@ import (
 )
 
 type articleRepositoryImpl struct {
-	psql *gorm.DB
+	psql    *gorm.DB
+	context context.Context
 }
 
 type ArticleRepository interface {
@@ -17,9 +19,10 @@ type ArticleRepository interface {
 	GetById(id uint64) entity.Article
 }
 
-func NewArticleRepository(dbConn *gorm.DB) ArticleRepository {
+func NewArticleRepository(context context.Context, dbConn *gorm.DB) ArticleRepository {
 	return &articleRepositoryImpl{
-		psql: dbConn,
+		context: context,
+		psql:    dbConn,
 	}
 }
 
@@ -44,7 +47,7 @@ func (a *articleRepositoryImpl) GetAll(filterData entity.Article) (res []entity.
 		base = base.Where("body like ? OR title like ? ", likeString, likeString)
 	}
 
-	base.Order("created DESC").Find(&res)
+	base.Debug().Order("created DESC").Find(&res)
 	return
 }
 func (a *articleRepositoryImpl) GetById(id uint64) (res entity.Article) {
