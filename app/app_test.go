@@ -3,6 +3,7 @@ package app_test
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -22,9 +23,9 @@ func SetUpRouter() *gin.Engine {
 	return router
 }
 
-var handlerArticle, pgsql = createTestArticleApp()
-
 func TestHealthHandler(t *testing.T) {
+	fmt.Println("")
+	fmt.Println("=================TestHealthHandler=================")
 	mockResponse := `{"status":"ok"}`
 	r := SetUpRouter()
 	r.GET("/health", func(ctx *gin.Context) {
@@ -41,12 +42,17 @@ func TestHealthHandler(t *testing.T) {
 	responseData, _ := ioutil.ReadAll(w.Body)
 	assert.Equal(t, mockResponse, string(responseData))
 	assert.Equal(t, http.StatusOK, w.Code)
+	fmt.Println("=================EndTestHealthHandler=================")
+	fmt.Println("")
 }
 
 func TestCreateArticle(t *testing.T) {
+	fmt.Println("")
+	fmt.Println("=================TestCreateArticle=================")
 	r := SetUpRouter()
-	r.POST("/api/article", handlerArticle.NewArticle)
 
+	var handlerArticle, pgsql = createTestArticleApp()
+	r.POST("/api/article", handlerArticle.NewArticle)
 	defer db.CloseDatabaseConnection(pgsql)
 
 	createArticle := dto.CreateArticleDTO{
@@ -79,12 +85,18 @@ func TestCreateArticle(t *testing.T) {
 	assert.Equal(t, createArticle.Author, createdArticleData.Author)
 	assert.Equal(t, createArticle.Title, createdArticleData.Title)
 	assert.Equal(t, createArticle.Body, createdArticleData.Body)
+
+	fmt.Println("=================EndTestCreateArticle=================")
+	fmt.Println("")
 }
 
 func TestGetArticle(t *testing.T) {
+	fmt.Println("")
+	fmt.Println("=================TestGetArticle=================")
 	r := SetUpRouter()
-	r.GET("/api/article", handlerArticle.GetListArticle)
 
+	var handlerArticle, pgsql = createTestArticleApp()
+	r.GET("/api/article", handlerArticle.GetListArticle)
 	defer db.CloseDatabaseConnection(pgsql)
 
 	req := httptest.NewRequest("GET", "/api/article", nil)
@@ -111,12 +123,18 @@ func TestGetArticle(t *testing.T) {
 		assert.NotNil(t, data.Title)
 		assert.NotNil(t, data.Body)
 	}
+
+	fmt.Println("=================EndTestGetArticle=================")
+	fmt.Println("")
 }
 
-func TestGetArticleFIlter(t *testing.T) {
+func TestGetFilterArticle(t *testing.T) {
+	fmt.Println("")
+	fmt.Println("=================TestGetArticleFIlter=================")
 	r := SetUpRouter()
-	r.GET("/api/article", handlerArticle.GetListArticle)
 
+	var handlerArticle, pgsql = createTestArticleApp()
+	r.GET("/api/article", handlerArticle.GetListArticle)
 	defer db.CloseDatabaseConnection(pgsql)
 
 	dataTest := []struct {
@@ -177,4 +195,7 @@ func TestGetArticleFIlter(t *testing.T) {
 
 		}
 	}
+
+	fmt.Println("=================EndTestGetArticleFIlter=================")
+	fmt.Println("")
 }

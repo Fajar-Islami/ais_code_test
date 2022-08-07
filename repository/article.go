@@ -44,7 +44,7 @@ func (a *articleRepositoryImpl) GetAll(filterData entity.Article) (res []entity.
 		base = base.Where("body like ? OR title like ? ", likeString, likeString)
 	}
 
-	base.Find(&res)
+	base.Order("created DESC").Find(&res)
 	return
 }
 func (a *articleRepositoryImpl) GetById(id uint64) (res entity.Article) {

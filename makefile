@@ -2,6 +2,7 @@ enterpostgre:
 	docker exec -it postgres_ais psql -U admin ais_db
 
 compile:
+	go test -v ./app
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o bin/app
 
 composerestart:
