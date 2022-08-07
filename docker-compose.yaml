@@ -1,3 +1,4 @@
+version: '3'
 services:
   postgres_ais:
     image: postgres:14.2-alpine
@@ -7,7 +8,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_USER=admin
-      - POSTGRES_DB=postgres_ais
+      - POSTGRES_DB=ais_db
     networks:
       - ais_network
     volumes:
@@ -24,6 +25,17 @@ services:
       - ais_network
     depends_on:
       - postgres_ais
+
+  redis:
+    image: redis:7.0-rc3
+    container_name: redis_ais
+    command: redis-server --save 60 1 --loglevel warning
+    ports:
+      - '6379:6379'
+    networks:
+      - ais_network
+    volumes:
+      - cahce_data:/data
 
   # ais_be:
   #   build: .
@@ -44,3 +56,4 @@ networks:
 
 volumes:
   ais_volume: {}
+  cahce_data: { driver: local }

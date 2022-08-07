@@ -11,6 +11,7 @@ type (
 	Container struct {
 		Apps  *Apps
 		Pgsql *Pgsql
+		Redis *Redis
 	}
 
 	Apps struct {
@@ -30,6 +31,16 @@ type (
 		MaxOpenConnections int    `json:"maxOpenConnections"`
 		MaxLifetime        int    `json:"maxLifetime"`
 	}
+
+	Redis struct {
+		RedisAddr      string
+		RedisPassword  string
+		RedisDB        int
+		RedisDefaultdb int
+		MinIdleConns   int
+		PoolSize       int
+		PoolTimeout    int
+	}
 )
 
 func (c *Container) Validate() *Container {
@@ -38,6 +49,9 @@ func (c *Container) Validate() *Container {
 	}
 	if c.Pgsql == nil {
 		panic("Pgsql config is nill")
+	}
+	if c.Redis == nil {
+		panic("Redis config is nill")
 	}
 
 	return c
@@ -71,6 +85,14 @@ func New(envpath string) *Container {
 	psqlMaxLifetime := v.GetInt("psql.MaxLifetime")
 	psqlMinIdleConn := v.GetInt("psql.MinIdleConnection")
 
+	redisAddr := v.GetString("redis.Addr")
+	redisPassword := v.GetString("redis.Password")
+	redisDB := v.GetInt("redis.Db")
+	redisDefaultDB := v.GetInt("redis.Defaultdb")
+	redisMinIdleConns := v.GetInt("redis.MinIdleConns")
+	redisPoolSize := v.GetInt("redis.PoolSize")
+	redisPoolTimeout := v.GetInt("redis.PoolTimeout")
+
 	appConf := &Apps{
 		Name:    appName,
 		Version: appVersion,
@@ -89,9 +111,20 @@ func New(envpath string) *Container {
 		MaxLifetime:        psqlMaxLifetime,
 	}
 
+	redisConf := &Redis{
+		RedisAddr:      redisAddr,
+		RedisPassword:  redisPassword,
+		RedisDB:        redisDB,
+		RedisDefaultdb: redisDefaultDB,
+		MinIdleConns:   redisMinIdleConns,
+		PoolSize:       redisPoolSize,
+		PoolTimeout:    redisPoolTimeout,
+	}
+
 	cont := &Container{
 		Apps:  appConf,
 		Pgsql: psqlConf,
+		Redis: redisConf,
 	}
 
 	cont.Validate()
