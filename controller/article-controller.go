@@ -56,6 +56,6 @@ func (ac *articleController) GetListArticle(c *gin.Context) {
 
 	listArticle := ac.articleService.GetArticles(filterData)
 	response := helper.BuildSuccessResponse("Get List Articles Success", listArticle)
-	c.JSON(http.StatusCreated, response)
+	c.JSON(http.StatusOK, response)
 
 }
