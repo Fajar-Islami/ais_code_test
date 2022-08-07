@@ -20,6 +20,9 @@ dockerclear:
 	docker rm ais_be
 	docker rmi ais_be:1.0.0
 
+gotest:
+	go test -v ./app
+
 # dockerrestart:
 # 	make dockerrun
 # go test -v ./app

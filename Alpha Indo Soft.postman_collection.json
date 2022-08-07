@@ -1,0 +1,276 @@
+{
+	"info": {
+		"_postman_id": "bcda982b-b4b4-470b-ab08-31475068b017",
+		"name": "Alpha Indo Soft",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12114597"
+	},
+	"item": [
+		{
+			"name": "Get Article",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{port}}/api/article?author=wati&search=artikel",
+					"host": [
+						"{{port}}"
+					],
+					"path": [
+						"api",
+						"article"
+					],
+					"query": [
+						{
+							"key": "author",
+							"value": "wati"
+						},
+						{
+							"key": "search",
+							"value": "artikel"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Get Article",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{port}}/api/article",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"article"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 Aug 2022 06:53:17 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "306"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Get List Articles Success\",\n    \"errors\": null,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"author\": \"fajar\",\n            \"title\": \"artikel 2\",\n            \"body\": \"body artikel 2\",\n            \"Created\": \"2022-08-06T13:52:39.909023+07:00\"\n        },\n        {\n            \"id\": 2,\n            \"author\": \"fajar\",\n            \"title\": \"artikel 2\",\n            \"body\": \"body artikel 2\",\n            \"Created\": \"2022-08-06T13:53:06.508814+07:00\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get Article",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{port}}/api/article?author=fajar",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"article"
+							],
+							"query": [
+								{
+									"key": "author",
+									"value": "fajar"
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 Aug 2022 08:25:00 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "190"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Get List Articles Success\",\n    \"errors\": null,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"author\": \"fajar\",\n            \"title\": \"artikel 1\",\n            \"body\": \"body artikel 1\",\n            \"created\": \"2022-08-06T14:10:34.50293+07:00\"\n        }\n    ]\n}"
+				},
+				{
+					"name": "Get Article",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{port}}/api/article?body=artikel",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"article"
+							],
+							"query": [
+								{
+									"key": "body",
+									"value": "artikel"
+								}
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 Aug 2022 08:25:11 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "314"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Get List Articles Success\",\n    \"errors\": null,\n    \"data\": [\n        {\n            \"id\": 1,\n            \"author\": \"fajar\",\n            \"title\": \"artikel 1\",\n            \"body\": \"body artikel 1\",\n            \"created\": \"2022-08-06T14:10:34.50293+07:00\"\n        },\n        {\n            \"id\": 2,\n            \"author\": \"ahmad\",\n            \"title\": \"ahmad arctile 2\",\n            \"body\": \"body artikel ahmad\",\n            \"created\": \"2022-08-06T14:10:52.77939+07:00\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Post Article",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"author\":\"wati\",\n    \"title\":\"Lorem ipsum ida\",\n    \"body\":\"body artikel lorem\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{port}}/api/article",
+					"host": [
+						"{{port}}"
+					],
+					"path": [
+						"api",
+						"article"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Post Article",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"author\":\"fajar\",\n    \"title\":\"artikel 2\",\n    \"body\":\"body artikel 2\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{port}}/api/article",
+							"host": [
+								"{{port}}"
+							],
+							"path": [
+								"api",
+								"article"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Sat, 06 Aug 2022 06:56:29 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "179"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": true,\n    \"message\": \"Article created\",\n    \"errors\": null,\n    \"data\": {\n        \"id\": 4,\n        \"author\": \"fajar\",\n        \"title\": \"artikel 2\",\n        \"body\": \"body artikel 2\",\n        \"created\": \"2022-08-06T13:56:29.250977+07:00\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{port}}/health",
+					"host": [
+						"{{port}}"
+					],
+					"path": [
+						"health"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "port",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

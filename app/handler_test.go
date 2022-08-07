@@ -1,6 +1,8 @@
 package app_test
 
 import (
+	"context"
+
 	"github.com/Fajar-Islami/ais_code_test/controller"
 	"github.com/Fajar-Islami/ais_code_test/infrastructure/container"
 	"github.com/Fajar-Islami/ais_code_test/infrastructure/db"
@@ -13,14 +15,14 @@ import (
 
 func createTestArticleApp() (controller.ArticleController, *gorm.DB) {
 	var (
-		cont                  = container.New("../.env")
-		pgsqlDb *gorm.DB      = db.SetupDatabaseConnection(*cont.Pgsql)
-		redisDb *redis.Client = redisClient.NewRedisClient(*cont.Redis)
-
-		articleRepo       article.ArticleRepository      = article.NewArticleRepository(pgsqlDb)
-		articleRedisRepo  article.RedisArtilceRepository = article.NewRedisRepo(redisDb)
-		artilceService    service.ArticleService         = service.NewArticleService(articleRepo, articleRedisRepo)
-		articleController controller.ArticleController   = controller.NewArticleController(artilceService)
+		cont                                             = container.New("../.env")
+		ctx               context.Context                = context.Background()
+		redisDb           *redis.Client                  = redisClient.NewRedisClient(*cont.Redis)
+		pgsqlDb           *gorm.DB                       = db.SetupDatabaseConnection(*cont.Pgsql)
+		articleRedisRepo  article.RedisArtilceRepository = article.NewRedisRepo(ctx, redisDb)
+		articleRepo       article.ArticleRepository      = article.NewArticleRepository(ctx, pgsqlDb)
+		artilceService    service.ArticleService         = service.NewArticleService(ctx, articleRepo, articleRedisRepo)
+		articleController controller.ArticleController   = controller.NewArticleController(ctx, artilceService)
 	)
 
 	return articleController, pgsqlDb
