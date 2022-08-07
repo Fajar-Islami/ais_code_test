@@ -1,13 +1,13 @@
 services:
-  ais_db_psql:
+  postgres_ais:
     image: postgres:14.2-alpine
     container_name: postgres_ais
     ports:
-      - '5432:5432'
+      - 5432:5432
     environment:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_USER=admin
-      - POSTGRES_DB=ais_db
+      - POSTGRES_DB=postgres_ais
     networks:
       - ais_network
     volumes:
@@ -17,13 +17,27 @@ services:
     image: adminer:latest
     container_name: postgres_adminer_ais
     ports:
-      - '9191:8080'
+      - 9191:8080
     environment:
       ADMINER_DESIGN: pepa-linha
     networks:
-      - 'ais_network'
+      - ais_network
     depends_on:
-      - ais_db_psql
+      - postgres_ais
+
+  # ais_be:
+  #   build: .
+  #   image: ais_be:1.0.0
+  #   container_name: ais_be
+  #   ports:
+  #     - 8081:8081
+  #   networks:
+  #     - ais_network
+  #   environment:
+  #     - psql.host=postgres_ais
+  #   depends_on:
+  #     - postgres_ais
+  #   restart: unless-stopped
 
 networks:
   ais_network: {}

@@ -10,6 +10,6 @@ FROM alpine:latest
 
 
 COPY --from=build /app/bin/app /app
-COPY .env.dev /.env
+COPY .env /.env
 
 ENTRYPOINT [ "/app" ]
