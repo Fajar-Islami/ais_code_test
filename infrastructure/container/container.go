@@ -43,9 +43,9 @@ func (c *Container) Validate() *Container {
 	return c
 }
 
-func New() *Container {
+func New(envpath string) *Container {
 	v := viper.New()
-	v.SetConfigFile(".env")
+	v.SetConfigFile(envpath)
 	pathDir, err := os.Executable()
 	if err != nil {
 		panic(err)

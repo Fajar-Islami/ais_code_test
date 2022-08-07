@@ -9,16 +9,14 @@ import (
 	"gorm.io/gorm"
 )
 
-func createTestArticleApp() controller.ArticleController {
+func createTestArticleApp() (controller.ArticleController, *gorm.DB) {
 	var (
-		cont                                           = container.New()
+		cont                                           = container.New("../.env")
 		pgsqlDb           *gorm.DB                     = db.SetupDatabaseConnection(*cont.Pgsql)
 		articleRepo       repository.ArticleRepository = repository.NewArticleRepository(pgsqlDb)
 		artilceService    service.ArticleService       = service.NewArticleService(articleRepo)
 		articleController controller.ArticleController = controller.NewArticleController(artilceService)
 	)
 
-	defer db.CloseDatabaseConnection(pgsqlDb)
-
-	return articleController
+	return articleController, pgsqlDb
 }

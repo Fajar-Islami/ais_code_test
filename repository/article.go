@@ -24,7 +24,8 @@ func NewArticleRepository(dbConn *gorm.DB) ArticleRepository {
 }
 
 func (a *articleRepositoryImpl) Insert(data entity.Article) (res entity.Article, err error) {
-	if a.psql.Debug().Save(&data).Error != nil {
+
+	if a.psql.Save(&data).Error != nil {
 		return res, errors.New("Failed to insert data")
 	}
 
@@ -33,7 +34,7 @@ func (a *articleRepositoryImpl) Insert(data entity.Article) (res entity.Article,
 	return
 }
 func (a *articleRepositoryImpl) GetAll(filterData entity.Article) (res []entity.Article) {
-	base := a.psql.Debug()
+	base := a.psql
 
 	if filterData.Author != "" {
 		base = base.Where("author = ?", filterData.Author)

@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	cont := container.New()
+	cont := container.New(".env")
 	serve := gin.Default()
 	app.Start(cont, serve)
 
