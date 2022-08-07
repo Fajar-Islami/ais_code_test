@@ -38,11 +38,9 @@ func (a *articleRepositoryImpl) GetAll(filterData entity.Article) (res []entity.
 	if filterData.Author != "" {
 		base = base.Where("author = ?", filterData.Author)
 	}
-	if filterData.Body != "" {
-		base = base.Where("body like ? ", "%"+filterData.Body+"%")
-	}
-	if filterData.Title != "" {
-		base = base.Where("title like ? ", "%"+filterData.Title+"%")
+	if filterData.Search != "" {
+		likeString := "%" + filterData.Search + "%"
+		base = base.Where("body like ? OR title like ? ", likeString, likeString)
 	}
 
 	base.Find(&res)

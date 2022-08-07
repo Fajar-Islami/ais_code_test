@@ -8,4 +8,5 @@ type Article struct {
 	Title   string    `gorm:"type:TEXT;not null" json:"title"`
 	Body    string    `gorm:"type:TEXT;not null" json:"body"`
 	Created time.Time `gorm:"autoCreateTime:true" json:"created"`
+	Search  string    `gorm:"-" json:"-"`
 }

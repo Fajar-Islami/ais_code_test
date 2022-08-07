@@ -24,8 +24,7 @@ func NewArticleService(articleRepo repository.ArticleRepository) ArticleService 
 func (as *articleServiceImpl) GetArticles(data dto.GetArticleDTO) []entity.Article {
 	dataFilter := entity.Article{
 		Author: data.Author,
-		Title:  data.Title,
-		Body:   data.Body,
+		Search: data.Search,
 	}
 	return as.articleRepo.GetAll(dataFilter)
 }

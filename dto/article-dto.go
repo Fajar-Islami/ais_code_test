@@ -8,6 +8,5 @@ type CreateArticleDTO struct {
 
 type GetArticleDTO struct {
 	Author string `json:"author" form:"author"`
-	Title  string `json:"title" form:"title"`
-	Body   string `json:"body" form:"body"`
+	Search string `json:"search" form:"search"`
 }
