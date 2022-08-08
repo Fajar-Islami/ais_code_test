@@ -9,4 +9,6 @@ type CreateArticleDTO struct {
 type GetArticleDTO struct {
 	Author string `json:"author" form:"author"`
 	Search string `json:"search" form:"search"`
+	Limit  uint   `json:"limit" form:"limit"`
+	Page   uint   `json:"page" form:"page"`
 }

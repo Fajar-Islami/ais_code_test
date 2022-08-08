@@ -36,16 +36,24 @@ func (as *articleServiceImpl) GetArticles(data dto.GetArticleDTO) (res []entity.
 	dataFilter := entity.Article{
 		Author: data.Author,
 		Search: data.Search,
+		Limit:  data.Limit,
+		Page:   data.Page,
 	}
 
-	if data.Author != "" || data.Search != "" {
+	if dataFilter.Author != "" || dataFilter.Search != "" {
 		// subprefix untuk keys di redis
 		strKeys := ""
-		if data.Author != "" {
-			strKeys = strKeys + "author=" + data.Author + ":"
+		if dataFilter.Author != "" {
+			strKeys = strKeys + "author=" + dataFilter.Author + ":"
 		}
-		if data.Search != "" {
-			strKeys = strKeys + "search=" + data.Search + ":"
+		if dataFilter.Search != "" {
+			strKeys = strKeys + "search=" + dataFilter.Search + ":"
+		}
+		if dataFilter.Limit > 0 {
+			strKeys = fmt.Sprint(strKeys, "limit=", dataFilter.Limit, ":")
+		}
+		if dataFilter.Page > 0 {
+			strKeys = fmt.Sprint(strKeys, "page=", dataFilter.Page, ":")
 		}
 
 		timeStr := fmt.Sprint(timeExpire, "m")

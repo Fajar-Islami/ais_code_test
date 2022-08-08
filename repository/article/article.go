@@ -47,6 +47,16 @@ func (a *articleRepositoryImpl) GetAll(filterData entity.Article) (res []entity.
 		base = base.Where("body like ? OR title like ? ", likeString, likeString)
 	}
 
+	if filterData.Limit != 0 {
+		base = base.Limit(int(filterData.Limit))
+	}
+
+	if filterData.Page != 0 {
+
+		offset := (filterData.Page - 1) * filterData.Limit
+		base = base.Offset(int(offset))
+	}
+
 	base.Debug().Order("created DESC").Find(&res)
 	return
 }

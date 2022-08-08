@@ -9,4 +9,6 @@ type Article struct {
 	Body    string    `gorm:"type:TEXT;not null" json:"body"`
 	Created time.Time `gorm:"autoCreateTime:true" json:"created"`
 	Search  string    `gorm:"-" json:"-"`
+	Limit   uint      `gorm:"-" json:"-"`
+	Page    uint      `gorm:"-" json:"-"`
 }
